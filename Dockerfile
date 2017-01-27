@@ -42,7 +42,12 @@ ENV PATH /opt/conda/bin:$PATH
 RUN wget http://step.esa.int/thirdparties/sen2cor/${SEN2COR_VERSION}/sen2cor-${SEN2COR_VERSION}.tar.gz && \
     tar -xvzf sen2cor-${SEN2COR_VERSION}.tar.gz && \
     cd sen2cor-${SEN2COR_VERSION} && \
-    /bin/echo -e "y\ny\ny\n" | python setup.py install
+    /bin/echo -e "y\ny\ny\n" | python setup.py install && \
+    mkdir dem/
+
+ENV SEN2CORPATH=sen2cor-${SEN2COR_VERSION}/dem
+
+RUN sed -i -e "s:<DEM_Directory>DEFAULT</DEM_Directory>:<DEM_Directory>${SEN2CORPATH}/dem/</DEM_Directory>:g" ${SEN2CORPATH}/cfg/L2A_GIPP.xml
 
 RUN pip install Glymur
 
