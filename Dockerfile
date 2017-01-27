@@ -1,6 +1,6 @@
 # This docker is based on ubuntu 14.04
 # The objective is to run sen2cor in this docker
-FROM ubuntu:14.04
+FROM debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -16,10 +16,9 @@ RUN apt-get update && \
         python-dev \
         python-distribute \
         python-pip \
-        software-properties-common 
+        software-properties-common
 
-RUN add-apt-repository ppa:ubuntugis/ubuntugis-unstable && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y \
         gdal-bin \
         libgdal-dev \
